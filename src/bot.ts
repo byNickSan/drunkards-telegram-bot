@@ -1,12 +1,28 @@
-import { Bot, InlineKeyboard, webhookCallback } from "grammy";
+import { Bot, Context, InlineKeyboard, webhookCallback } from "grammy";
+import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { chunk } from "lodash";
 import express from "express";
 import { applyTextEffect, Variant } from "./textEffects";
 
 import type { Variant as TextEffectVariant } from "./textEffects";
 
+// For TypeScript and auto-completion support,
+// extend the context with I18n's flavor:
+type MyContext = Context & I18nFlavor;
+
 // Create a bot using the Telegram token
-const bot = new Bot(process.env.TELEGRAM_TOKEN || "");
+const bot = new Bot<MyContext>(process.env.TELEGRAM_TOKEN || "");
+
+// Create an `I18n` instance.
+// Continue reading to find out how to configure the instance.
+const i18n = new I18n<MyContext>({
+  defaultLocale: "en", // see below for more information
+  directory: "locales", // Load all translation files from locales/.
+});
+
+// Finally, register the i18n instance in the bot,
+// so the messages get translated on their way!
+bot.use(i18n);
 
 // Handle the /yo command to greet the user
 bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
@@ -153,8 +169,8 @@ for (const effect of allEffects) {
 
 // Handle the /about command
 const aboutUrlKeyboard = new InlineKeyboard().url(
-  "Host your own bot for free.",
-  "https://cyclic.sh/"
+    "join",
+  "https://t.me/+A7jKi9dbLTMzNDUy" // https://t.me/drunkardsbc
 );
 
 // Suggest commands in the menu
