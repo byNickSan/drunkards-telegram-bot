@@ -40,6 +40,10 @@ bot.api.setMyCommands([
     command: "help",
     description: "Get help information",
   },
+  {
+    command: "lang",
+    description: "Change language",
+  },
 ]);
 
 // Handle all other messages and the /start command
@@ -56,7 +60,10 @@ const replyWithIntro = (ctx: any) =>
   });
 
 bot.command("start", async (ctx) => {
-  await ctx.reply(ctx.t("start"));
+  await ctx.reply(ctx.t("start"), {
+    reply_markup: aboutUrlKeyboard,
+    parse_mode: "HTML",
+  });
 });
 bot.command("help", async (ctx) => {
   await ctx.reply(ctx.t("help"));
