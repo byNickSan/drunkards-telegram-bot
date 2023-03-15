@@ -33,6 +33,10 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
   "https://t.me/+A7jKi9dbLTMzNDUy" // https://t.me/drunkardsbc
 );
 
+const changeLanguageKeyboard = new InlineKeyboard()
+    .text("\xF0\x9F\x87\xBA\xF0\x9F\x87\xB8 English")
+    .text("\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA Russian");
+
 // Suggest commands in the menu
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
@@ -63,6 +67,12 @@ bot.command("start", async (ctx) => {
   await ctx.reply(ctx.t("start"), {
     reply_markup: aboutUrlKeyboard,
     parse_mode: "HTML",
+  });
+});
+bot.command("lang", async (ctx) => {
+  await ctx.reply(ctx.t("lang"), {
+    reply_markup: changeLanguageKeyboard,
+    parse_mode: "text",
   });
 });
 bot.command("help", async (ctx) => {
