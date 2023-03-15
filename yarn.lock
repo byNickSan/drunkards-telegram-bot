@@ -522,7 +522,11 @@
     "once" "^1.3.0"
     "path-is-absolute" "^1.0.0"
 
+<<<<<<< HEAD
 "grammy@^1.10.0", "grammy@^1.15.3":
+=======
+"grammy@^1.10.0", "grammy@^1.11.2":
+>>>>>>> origin/main
   "integrity" "sha512-uqkF4AMWiZTSwwzBeprRIEiOg3yXT7Ray37bpg2ew5jaX+cuIG5AUm30S2Vr8ezghjLZKgAg2tRi+r9f9uvMrg=="
   "resolved" "https://registry.npmjs.org/grammy/-/grammy-1.15.3.tgz"
   "version" "1.15.3"
