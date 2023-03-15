@@ -34,8 +34,8 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
 );
 
 const changeLanguageKeyboard = new InlineKeyboard()
-    .text("\xF0\x9F\x87\xBA\xF0\x9F\x87\xB8 English")
-    .text("\xF0\x9F\x87\xB7\xF0\x9F\x87\xBA Russian");
+    .text(iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F1F7)) + " Russian")
+    .text(iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F1F8)) + " English");
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
