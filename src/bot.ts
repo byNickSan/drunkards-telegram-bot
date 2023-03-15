@@ -33,9 +33,20 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
   "https://t.me/+A7jKi9dbLTMzNDUy" // https://t.me/drunkardsbc
 );
 
+function unicodeToChar(text:string) {
+  const splited = text.split(" ")
+  let str = ""
+  for(let i = 0;i < splited.length;i++){
+    splited[i] = splited[i].replace('U','0')
+    splited[i] = splited[i].replace('+','x')
+    str += String.fromCodePoint(parseInt(splited[i],16))
+  }
+  return str
+}
+
 const changeLanguageKeyboard = new InlineKeyboard()
-    .text(iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F1F7)) + " Russian")
-    .text(iconv('UCS-4LE', 'UTF-8', pack('V', 0x1F1F8)) + " English");
+    .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian")
+    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English");
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
