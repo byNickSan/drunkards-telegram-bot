@@ -51,13 +51,13 @@ const changeLanguageKeyboard = new InlineKeyboard()
 
 bot.callbackQuery("lang_russian", async (ctx) => {
   await ctx.answerCallbackQuery({
-    text: "Set russian!",
+    text: "Добро пожаловать!",
   });
 });
 
 bot.callbackQuery("lang_english", async (ctx) => {
   await ctx.answerCallbackQuery({
-    text: "Set english!",
+    text: "Welcome!",
   });
 });
 
