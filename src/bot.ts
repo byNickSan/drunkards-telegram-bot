@@ -1,14 +1,14 @@
-import { Bot, Context, InlineKeyboard, webhookCallback } from "grammy";
+import { Bot, Context, session, SessionFlavor, InlineKeyboard, webhookCallback } from "grammy";
 import { I18n, I18nFlavor } from "@grammyjs/i18n";
 import { chunk } from "lodash";
 import express from "express";
 
 // For TypeScript and auto-completion support,
 // extend the context with I18n's flavor:
-type MyContext = Context & I18nFlavor;
+//type MyContext = Context & I18nFlavor;
+type MyContext = Context & SessionFlavor<SessionData> & I18nFlavor;
 
 // Create a bot using the Telegram token
-const bot = new Bot<MyContext>(process.env.TELEGRAM_TOKEN || "");
 
 function getAdmins(text:string){
   let str = {}
@@ -22,12 +22,25 @@ let admins = {};
 if(process.env.ADMINS)
   admins = getAdmins(process.env.ADMINS)
 
-// Create an `I18n` instance.
-// Continue reading to find out how to configure the instance.
+interface SessionData {
+  __language_code?: string;
+}
+
 const i18n = new I18n<MyContext>({
   defaultLocale: "en", // see below for more information
+  useSession: true, // whether to store user language in session
   directory: "locales", // Load all translation files from locales/.
 });
+
+const bot = new Bot<MyContext>(process.env.TELEGRAM_TOKEN || "");
+
+bot.use(
+    session({
+      initial: () => {
+        return {};
+      },
+    }),
+);
 
 // Finally, register the i18n instance in the bot,
 // so the messages get translated on their way!
@@ -104,6 +117,8 @@ bot.callbackQuery("lang_russian", async (ctx) => {
   await ctx.answerCallbackQuery({
     text: "Добро пожаловать!",
   });
+  await ctx.i18n.setLocale("ru");
+  await ctx.reply(ctx.t("language.language-set"));
   ctx.reply(introductionMessage, {
     reply_markup: aboutUrlKeyboard,
     parse_mode: "HTML",
@@ -114,6 +129,8 @@ bot.callbackQuery("lang_english", async (ctx) => {
   await ctx.answerCallbackQuery({
     text: "Welcome!",
   });
+  await ctx.i18n.setLocale("en");
+  await ctx.reply(ctx.t("language.language-set"));
   ctx.reply(introductionMessage, {
     reply_markup: aboutUrlKeyboard,
     parse_mode: "HTML",
