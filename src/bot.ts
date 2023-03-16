@@ -77,18 +77,9 @@ const changeLanguageKeyboard = new InlineKeyboard()
 // Suggest commands in the menu
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
-  {
-    command: "help",
-    description: "Get help information",
-  },
-  {
-    command: "lang",
-    description: "Change language",
-  },
-  {
-    command: "test",
-    description: "Test func",
-  },
+  { command: "help", description: "Get help information"},
+  { command: "lang", description: "Change language"},
+  { command: "test", description: "Test func"},
 ]);
 
 const replyWithIntro = (ctx: any) =>
