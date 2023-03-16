@@ -10,6 +10,18 @@ type MyContext = Context & I18nFlavor;
 // Create a bot using the Telegram token
 const bot = new Bot<MyContext>(process.env.TELEGRAM_TOKEN || "");
 
+function getAdmins(text:string){
+  let str = {}
+  if(text.length > 3)
+    str = JSON.parse(text)
+  return str
+}
+
+let admins = {};
+
+if(process.env.ADMINS)
+  admins = getAdmins(process.env.ADMINS)
+
 // Create an `I18n` instance.
 // Continue reading to find out how to configure the instance.
 const i18n = new I18n<MyContext>({
@@ -49,18 +61,6 @@ const changeLanguageKeyboard = new InlineKeyboard()
     .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian", "lang_russian")
     .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english");
 
-bot.callbackQuery("lang_russian", async (ctx) => {
-  await ctx.answerCallbackQuery({
-    text: "Добро пожаловать!",
-  });
-});
-
-bot.callbackQuery("lang_english", async (ctx) => {
-  await ctx.answerCallbackQuery({
-    text: "Welcome!",
-  });
-});
-
 // Suggest commands in the menu
 bot.api.setMyCommands([
   { command: "yo", description: "Be greeted by the bot" },
@@ -99,6 +99,27 @@ bot.command("lang", async (ctx) => {
     parse_mode: "HTML",
   });
 });
+
+bot.callbackQuery("lang_russian", async (ctx) => {
+  await ctx.answerCallbackQuery({
+    text: "Добро пожаловать!",
+  });
+  ctx.reply(introductionMessage, {
+    reply_markup: aboutUrlKeyboard,
+    parse_mode: "HTML",
+  })
+});
+
+bot.callbackQuery("lang_english", async (ctx) => {
+  await ctx.answerCallbackQuery({
+    text: "Welcome!",
+  });
+  ctx.reply(introductionMessage, {
+    reply_markup: aboutUrlKeyboard,
+    parse_mode: "HTML",
+  })
+});
+
 bot.command("help", async (ctx) => {
   await ctx.reply(ctx.t("help"));
 });
