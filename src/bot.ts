@@ -55,10 +55,11 @@ bot.use(i18n);
 //bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
 
 bot.command("yo", async (ctx) => {
-  if(typeof(ctx.from?.id) === "number" && isAdmin(ctx.from.id)){
+  if(!!ctx.from?.id && typeof(ctx.from.id) === "number" && isAdmin(ctx.from?.id)){
     ctx.reply(`Yo [admin] ${ctx.from?.username}`);
-  }else
+  }else {
     ctx.reply(`Yo ${ctx.from?.username}`);
+  }
 })
 
 
