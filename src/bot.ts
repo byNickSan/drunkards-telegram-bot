@@ -53,7 +53,6 @@ bot.use(i18n);
 
 // Handle the /yo command to greet the user
 //bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
-bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
 
 bot.command("yo", async (ctx) => {
   if(typeof(ctx.from?.id) === "number" && isAdmin(ctx.from.id)){
