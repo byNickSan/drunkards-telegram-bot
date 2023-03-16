@@ -85,6 +85,10 @@ bot.api.setMyCommands([
     command: "lang",
     description: "Change language",
   },
+  {
+    command: "test",
+    description: "Test func",
+  },
 ]);
 
 const replyWithIntro = (ctx: any) =>
@@ -123,6 +127,8 @@ bot.command("help", async (ctx) => {
   await ctx.reply(ctx.t("help"));
 });
 bot.on("message", replyWithIntro);
+
+bot.command("test", (ctx) => ctx.reply(`Yo ${ctx.from?.id}`));
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
