@@ -87,18 +87,8 @@ bot.api.setMyCommands([
   },
 ]);
 
-// Handle all other messages and the /start command
-const introductionMessage = `Hello! I'm a Telegram bot.
-I'm powered by Cyclic, the next-generation serverless computing platform.
-
-<b>Commands</b>
-/yo - Be greeted by me`;
-
 const replyWithIntro = (ctx: any) =>
-  ctx.reply(introductionMessage, {
-    reply_markup: aboutUrlKeyboard,
-    parse_mode: "HTML",
-  });
+  ctx.reply(ctx.t("introductionMessage"));
 
 bot.command("start", async (ctx) => {
   await ctx.reply(ctx.t("start"), {
@@ -118,11 +108,7 @@ bot.callbackQuery("lang_russian", async (ctx) => {
     text: "Добро пожаловать!",
   });
   await ctx.i18n.setLocale("ru");
-  await ctx.reply(ctx.t("language.language-set"));
-  ctx.reply(introductionMessage, {
-    reply_markup: aboutUrlKeyboard,
-    parse_mode: "HTML",
-  })
+  ctx.reply(ctx.t("introductionMessage"))
 });
 
 bot.callbackQuery("lang_english", async (ctx) => {
@@ -130,11 +116,7 @@ bot.callbackQuery("lang_english", async (ctx) => {
     text: "Welcome!",
   });
   await ctx.i18n.setLocale("en");
-  await ctx.reply(ctx.t("language.language-set"));
-  ctx.reply(introductionMessage, {
-    reply_markup: aboutUrlKeyboard,
-    parse_mode: "HTML",
-  })
+  ctx.reply(ctx.t("introductionMessage"))
 });
 
 bot.command("help", async (ctx) => {
