@@ -55,11 +55,24 @@ bot.use(i18n);
 //bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
 
 bot.command("yo", async (ctx) => {
-  if(!!ctx.from?.id && typeof(ctx.from.id) === "number" && isAdmin(ctx.from?.id)){
-    ctx.reply(`Yo [admin] ${ctx.from?.username}`);
-  }else {
-    ctx.reply(`Yo ${ctx.from?.username}`);
+  let test = {};
+  if((ctx.from?.id)) {
+    let test = {
+      exp1: (ctx.from?.id),
+      exp2: (typeof (ctx.from.id) === "number"),
+      exp3: isAdmin(ctx.from?.id)
+    };
   }
+  console.log('test yo',test);
+  if(
+      (ctx.from?.id) &&
+      (typeof(ctx.from.id) === "number") &&
+      isAdmin(ctx.from?.id)
+  ){
+    ctx.reply(`Yo [admin] ${ctx.from?.username}`);
+    return
+  }
+  ctx.reply(`Yo ${ctx.from?.username}`);
 })
 
 
