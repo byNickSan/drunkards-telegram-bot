@@ -33,6 +33,7 @@ const aboutUrlKeyboard = new InlineKeyboard().url(
   "https://t.me/+A7jKi9dbLTMzNDUy" // https://t.me/drunkardsbc
 );
 
+// https://apps.timwhitlock.info/emoji/tables/unicode
 function unicodeToChar(text:string) {
   const splited = text.split(" ")
   let str = ""
@@ -45,8 +46,20 @@ function unicodeToChar(text:string) {
 }
 
 const changeLanguageKeyboard = new InlineKeyboard()
-    .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian")
-    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English");
+    .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian", "lang_russian")
+    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english");
+
+bot.callbackQuery("lang_russian", async (ctx) => {
+  await ctx.answerCallbackQuery({
+    text: "Set russian!",
+  });
+});
+
+bot.callbackQuery("lang_english", async (ctx) => {
+  await ctx.answerCallbackQuery({
+    text: "Set english!",
+  });
+});
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
