@@ -11,17 +11,22 @@ type MyContext = Context & SessionFlavor<SessionData> & I18nFlavor;
 // Create a bot using the Telegram token
 
 function getAdmins(text:string){
-  let str = {}
+  let str = Array();
   if(text.length > 3)
     str = JSON.parse(text)
   return str
 }
 
-let admins = {};
+let admins = Array();
 
 if(process.env.ADMINS)
   admins = getAdmins(process.env.ADMINS)
 
+function isAdmin(id:number){
+  if(admins.includes(id))
+    return true
+  return false
+}
 interface SessionData {
   __language_code?: string;
 }
@@ -47,7 +52,16 @@ bot.use(
 bot.use(i18n);
 
 // Handle the /yo command to greet the user
+//bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
 bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
+
+bot.command("yo", async (ctx) => {
+  if(typeof(ctx.from?.id) === "number" && isAdmin(ctx.from.id)){
+    ctx.reply(`Yo [admin] ${ctx.from?.username}`);
+  }else
+    ctx.reply(`Yo ${ctx.from?.username}`);
+})
+
 
 // Return empty result list for other queries.
 bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
