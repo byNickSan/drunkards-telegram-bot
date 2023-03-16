@@ -47,7 +47,7 @@ bot.use(
 bot.use(i18n);
 
 // Handle the /yo command to greet the user
-bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username}`));
+bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
 
 // Return empty result list for other queries.
 bot.on("inline_query", (ctx) => ctx.answerInlineQuery([]));
@@ -117,9 +117,12 @@ bot.callbackQuery("lang_english", async (ctx) => {
 bot.command("help", async (ctx) => {
   await ctx.reply(ctx.t("help"));
 });
+bot.command("test", (ctx) => ctx.reply(`Yo ${ctx.from?.id}`));
+bot.command("help", async (ctx) => {
+  await ctx.reply(ctx.t("help"));
+});
 bot.on("message", replyWithIntro);
 
-bot.command("test", (ctx) => ctx.reply(`Yo ${ctx.from?.id}`));
 
 // Start the server
 if (process.env.NODE_ENV === "production") {
