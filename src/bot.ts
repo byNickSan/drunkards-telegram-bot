@@ -69,10 +69,10 @@ bot.command("yo", async (ctx) => {
       (typeof(ctx.from.id) === "number") &&
       isAdmin(ctx.from?.id)
   ){
-    ctx.reply(`Yo [admin] ${ctx.from?.username}`);
-    return
+    await ctx.reply(`Yo [admin] ${ctx.from?.username}`);
+    return true;
   }
-  ctx.reply(`Yo ${ctx.from?.username}`);
+  await ctx.reply(`Yo ${ctx.from?.username}`);
 })
 
 
