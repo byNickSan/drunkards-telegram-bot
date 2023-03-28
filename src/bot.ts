@@ -54,25 +54,16 @@ bot.use(i18n);
 // Handle the /yo command to greet the user
 //bot.command("yo", (ctx) => ctx.reply(`Yo ${ctx.from?.username} (${ctx.from?.id})`));
 
-bot.command("yo", async (ctx) => {
-  let test = {};
-  if((ctx.from?.id)) {
-    let test = {
-      exp1: (ctx.from?.id),
-      exp2: (typeof (ctx.from.id) === "number"),
-      exp3: isAdmin(ctx.from?.id)
-    };
-  }
-  console.log('test yo',test);
+bot.command("hello", async (ctx) => {
   if(
       (ctx.from?.id) &&
       (typeof(ctx.from.id) === "number") &&
       isAdmin(ctx.from?.id)
   ){
-    await ctx.reply(`Yo [admin] ${ctx.from?.username}`);
+    await ctx.reply(`Hello, ${ctx.from?.username}. You are is admin.`);
     return true;
   }
-  await ctx.reply(`Yo ${ctx.from?.username}`);
+  await ctx.reply(`Hello, ${ctx.from?.username}`);
 })
 
 
@@ -99,14 +90,17 @@ function unicodeToChar(text:string) {
 
 const changeLanguageKeyboard = new InlineKeyboard()
     .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian", "lang_russian")
-    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english");
+    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english")
+    .url(unicodeToChar("U+1F642") + " Stickers", "https://t.me/addstickers/DrunkardsBC_Public")
+    .url(unicodeToChar("U+1F6B2") + " Community", "https://t.me/DrunkardsBC_Public");
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
-  { command: "yo", description: "Be greeted by the bot" },
+  { command: "hello", description: "Be greeted by the bot" },
   { command: "help", description: "Get help information"},
   { command: "lang", description: "Change language"},
-  { command: "test", description: "Test func"},
+  { command: "getid", description: "Show your Telegram id"},
+  { command: "newpost", description: "Post to channel"},
 ]);
 
 const replyWithIntro = (ctx: any) =>
@@ -144,7 +138,7 @@ bot.callbackQuery("lang_english", async (ctx) => {
 bot.command("help", async (ctx) => {
   await ctx.reply(ctx.t("help"));
 });
-bot.command("test", (ctx) => ctx.reply(`Yo ${ctx.from?.id}`));
+bot.command("getid", (ctx) => ctx.reply(`User id: ${ctx.from?.id}, chat id: ${ctx.message?.chat?.id}`));
 bot.command("help", async (ctx) => {
   await ctx.reply(ctx.t("help"));
 });
