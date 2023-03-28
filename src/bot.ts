@@ -89,10 +89,10 @@ function unicodeToChar(text:string) {
 }
 
 const changeLanguageKeyboard = new InlineKeyboard()
+    .url(unicodeToChar("U+1F642") + " Stickers", "https://t.me/addstickers/DrunkardsBC_Public").row()
+    .url(unicodeToChar("U+1F6B2") + " Community", "https://t.me/DrunkardsBC_Public").row()
     .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian", "lang_russian")
-    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english")
-    .url(unicodeToChar("U+1F642") + " Stickers", "https://t.me/addstickers/DrunkardsBC_Public")
-    .url(unicodeToChar("U+1F6B2") + " Community", "https://t.me/DrunkardsBC_Public");
+    .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english");
 
 // Suggest commands in the menu
 bot.api.setMyCommands([
@@ -125,6 +125,10 @@ bot.callbackQuery("lang_russian", async (ctx) => {
   });
   await ctx.i18n.setLocale("ru");
   ctx.reply(ctx.t("introductionMessage"))
+  await ctx.reply(ctx.t("lang"), {
+    reply_markup: changeLanguageKeyboard,
+    parse_mode: "HTML",
+  });
 });
 
 bot.callbackQuery("lang_english", async (ctx) => {
