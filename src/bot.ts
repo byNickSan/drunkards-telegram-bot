@@ -89,8 +89,8 @@ function unicodeToChar(text:string) {
 }
 
 const changeLanguageKeyboard = new InlineKeyboard()
-    .url(unicodeToChar("U+1F642") + " Stickers", "https://t.me/addstickers/DrunkardsBC_Public").row()
     .url(unicodeToChar("U+1F6B2") + " Community", "https://t.me/DrunkardsBC_Public").row()
+    .url(unicodeToChar("U+1F642") + " Stickers", "https://t.me/addstickers/DrunkardsBC_Public").row()
     .text(unicodeToChar("U+1F1F7 U+1F1FA") + " Russian", "lang_russian")
     .text(unicodeToChar("U+1F1FA U+1F1F8") + " English", "lang_english");
 
@@ -107,10 +107,14 @@ const replyWithIntro = (ctx: any) =>
   ctx.reply(ctx.t("introductionMessage"));
 
 bot.command("start", async (ctx) => {
-  await ctx.reply(ctx.t("start"), {
-    reply_markup: aboutUrlKeyboard,
+  await ctx.reply(ctx.t("lang"), {
+    reply_markup: changeLanguageKeyboard,
     parse_mode: "HTML",
   });
+  // await ctx.reply(ctx.t("start"), {
+  //   reply_markup: aboutUrlKeyboard,
+  //   parse_mode: "HTML",
+  // });
 });
 bot.command("lang", async (ctx) => {
   await ctx.reply(ctx.t("lang"), {
